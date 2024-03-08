@@ -1,0 +1,18 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  height: 100vh;
+  padding: 2rem 2rem 0;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.footer {
+  color: rgb(78, 78, 78); /* TODO: text-secondary */
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0 1rem;
+}
