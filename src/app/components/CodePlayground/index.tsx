@@ -17,10 +17,12 @@ const CodePlayground = ({ defaultCode }: CodePlaygroundProps) => {
 
   useEffect(() => {
     setCode(defaultCode);
+    setIsError(false);
     setOutput(DEFAULT_CONSOLE_STATE);
   }, [defaultCode]);
 
   const handleClearButtonClick = () => {
+    setIsError(false);
     setOutput(DEFAULT_CONSOLE_STATE);
   };
 
@@ -78,7 +80,7 @@ const CodePlayground = ({ defaultCode }: CodePlaygroundProps) => {
             Сбросить
           </button>
         </div>
-        <div className={styles.output}>
+        <div className={styles.output} data-error={`${isError}`}>
           {output.map((line, i) => (
             <div className={styles.line} key={i}>
               {line}

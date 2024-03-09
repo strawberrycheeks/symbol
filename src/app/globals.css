@@ -1,6 +1,7 @@
 :root {
   --border: #cdcdcd;
   --background: #f9f9fb;
+  --error: #d30038;
   --hover: #e3e6e8;
   --text-primary: #000000;
   --text-secondary: #595959;

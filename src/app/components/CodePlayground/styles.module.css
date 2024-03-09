@@ -50,6 +50,10 @@
   width: 100%;
 }
 
+.output[data-error='true'] {
+  border-color: var(--error);
+}
+
 .line {
   white-space: pre-wrap;
 }

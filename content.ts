@@ -166,7 +166,10 @@ export const PresentationContent = {
     },
     {
       title: 'Symbol.prototype.toString()',
-      content: ['Используется для преобразования символа к строке. Возвращает строку в формате "Symbol(description)".'],
+      content: [
+        'Используется для преобразования символа к строке, для символов возвращает строку в формате "Symbol(description)".',
+        'Неявное преобразование символа к строке не допускается. ',
+      ],
       codeExample:
         'console.log(Symbol("description").toString());\n// Ожидаемый вывод: "Symbol(description)"\n\nconsole.log(Symbol.iterator.toString());\n// Ожидаемый вывод: "Symbol(Symbol.iterator)"\n\nconsole.log(Symbol.for("foo").toString());\n// Ожидаемый вывод: "Symbol(foo)"\n\nconsole.log(Symbol("foo") + "bar");\n// Ожидаемый вывод: TypeError: Cannot convert a Symbol value to a string',
     },
