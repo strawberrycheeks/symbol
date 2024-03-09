@@ -1,9 +1,33 @@
 .title {
-  font-size: 36px;
-  padding-bottom: 1rem;
+  color: var(--text-primary);
+  font-size: 44px;
+  margin: 24px 0 32px;
 }
 
 .text {
-  font-size: 18px;
-  padding-bottom: 1rem;
+  color: var(--text-secondary);
+  font-size: 24px;
+  margin-bottom: 24px;
+  white-space: pre-wrap;
+}
+
+.text:last-of-type {
+  margin-bottom: 32px;
+}
+
+.title[data-type='title'] {
+  font-size: 80px;
+  margin-bottom: 8%;
+  margin-top: 16%;
+  text-align: center;
+  width: 100%;
+}
+
+.text[data-type='title'] {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.text:first-of-type[data-type='title'] {
+  font-weight: 600;
 }

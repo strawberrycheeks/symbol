@@ -1,33 +1,39 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Editor, OnMount } from '@monaco-editor/react';
-import { editor } from 'monaco-editor';
 import { executeCode } from '@/app/utils/api';
 import styles from './styles.module.css';
 
-type IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
+const DEFAULT_CONSOLE_STATE = ['Нажмите "Запустить", чтобы выполнить код'];
 
 interface CodePlaygroundProps {
   defaultCode: string;
 }
 
 const CodePlayground = ({ defaultCode }: CodePlaygroundProps) => {
-  const editorRef = useRef<IStandaloneCodeEditor>();
-  const [value, setValue] = useState(defaultCode);
-
-  const [output, setOutput] = useState<string[]>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [code, setCode] = useState(defaultCode);
+  const [output, setOutput] = useState(DEFAULT_CONSOLE_STATE);
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleButtonClick = async () => {
-    const sourceCode = value;
-    if (!sourceCode) {
+  useEffect(() => {
+    setCode(defaultCode);
+    setOutput(DEFAULT_CONSOLE_STATE);
+  }, [defaultCode]);
+
+  const handleClearButtonClick = () => {
+    setOutput(DEFAULT_CONSOLE_STATE);
+  };
+
+  const handleRunButtonClick = async () => {
+    if (!code) {
       return;
     }
     try {
       setIsLoading(true);
-      const { run: result } = await executeCode(sourceCode);
+      const { run: result } = await executeCode(code);
+      console.log(result.output.split('\n'));
       setOutput(result.output.split('\n'));
-      result.stderr ? setIsError(true) : setIsError(false);
+      setIsError(Boolean(result.stderr));
     } catch (error) {
       console.log(error);
     } finally {
@@ -36,43 +42,48 @@ const CodePlayground = ({ defaultCode }: CodePlaygroundProps) => {
   };
 
   const handleChange = (value?: string) => {
-    console.log(value);
-    setValue(value ?? '');
+    setCode(value ?? '');
   };
 
   const handleEditorDidMount: OnMount = editor => {
-    editorRef.current = editor;
     editor.updateOptions({
-      fontFamily: "Menlo, Monaco, 'Courier New', monospace",
-      fontSize: 15,
-      scrollBeyondLastLine: false,
-      scrollBeyondLastColumn: 2,
+      fontSize: 18,
+      insertSpaces: true,
+      minimap: {
+        enabled: false,
+      },
       renderLineHighlightOnlyWhenFocus: true,
+      scrollBeyondLastColumn: 2,
+      scrollBeyondLastLine: false,
     });
   };
 
   return (
     <>
-      <div className={styles.header}>JavaScript demo: Array.push()</div>
+      <div className={styles.header}>JavaScript demo</div>
       <Editor
         className={styles.editor}
         defaultLanguage='javascript'
-        height='240px'
+        height='320px'
         onMount={handleEditorDidMount}
-        value={value}
+        value={code}
         onChange={handleChange}
       />
       <div className={styles.controls}>
         <div className={styles.buttons}>
-          <button className={styles.button} disabled={isLoading} onClick={handleButtonClick}>
+          <button className={styles.button} disabled={isLoading} onClick={handleRunButtonClick}>
             Запустить
           </button>
-          <button className={styles.button} disabled={isLoading} onClick={handleButtonClick}>
+          <button className={styles.button} disabled={isLoading} onClick={handleClearButtonClick}>
             Сбросить
           </button>
         </div>
         <div className={styles.output}>
-          {output ? output.map((line, i) => <p key={i}>{line}</p>) : 'Нажмите "Запустить", чтобы выполнить код'}
+          {output.map((line, i) => (
+            <div className={styles.line} key={i}>
+              {line}
+            </div>
+          ))}
         </div>
       </div>
     </>

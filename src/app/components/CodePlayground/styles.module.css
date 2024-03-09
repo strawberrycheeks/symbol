@@ -1,42 +1,55 @@
 .header {
-  border: 1px solid #cdcdcd;
-  border-radius: 0.25rem 0.25rem 0 0;
-  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 4px 4px 0 0;
+  padding: 8px 16px;
 }
 
 .editor {
-  border: 1px solid #cdcdcd;
+  border: 1px solid var(--border);
   border-top: none;
 }
 
 .buttons {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
 .button {
-  background-color: white;
-  border: 1px solid #cdcdcd;
-  border-radius: 0.25rem;
+  background-color: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
   font: inherit;
   font-weight: 600;
   height: fit-content;
-  padding: 0.5rem 1.5rem;
+  padding: 8px 24px;
+  user-select: none;
+}
+
+.button:hover {
+  background-color: var(--background);
 }
 
 .controls {
   display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
+  gap: 8px;
+  margin-top: 8px;
 }
 
 .output {
-  background-color: #f9f9fb;
-  border: 1px solid #cdcdcd;
-  border-radius: 0.25rem;
-  width: 100%;
-  height: 120px;
-  padding: 0.5rem 1rem;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 140px;
   overflow-y: auto;
+  padding: 8px 16px;
+  width: 100%;
+}
+
+.line {
+  white-space: pre-wrap;
 }
